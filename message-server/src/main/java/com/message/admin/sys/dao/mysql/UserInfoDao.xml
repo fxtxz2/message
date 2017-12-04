@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.admin.sys.dao.UserInfoDao">
+
+	<sql id="commCols">
+		id id,sys_no sysNo,user_id userId,create_time createTime
+	</sql>
+
+	<insert id="save" parameterType="userInfo" flushCache="true">
+		 insert into user_info(sys_no,user_id,create_time)
+		 values(#{sysNo},#{userId},#{createTime})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from user_info
+		<where>id=#{id}</where>
+	</delete>
+	
+	<update id="update" parameterType="userInfo" flushCache="true">
+		update user_info
+		<set>
+			sys_no=#{sysNo},user_id=#{userId},create_time=#{createTime}
+		</set>
+		<where>id=#{id}</where>
+	</update>
+	
+	<select id="get" resultType="userInfo">
+		select <include refid="commCols"/> from user_info
+  		<where>id=#{id}</where>
+	</select>
+	
+	<select id="findUserInfo" parameterType="userInfo" resultType="userInfo">
+		select <include refid="commCols"/> from user_info
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+			and isdel=0
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findUserInfoCount" parameterType="userInfo" resultType="int">
+		select count(*) from user_info
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+			and isdel=0
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.admin.msg.dao.MsgGroupDao">
+
+	<sql id="commCols">
+		id id,sys_no sysNo,type type,name name,create_time createTime
+	</sql>
+
+	<insert id="save" parameterType="msgGroup" flushCache="true">
+		 insert into msg_group(id,sys_no,type,name,create_time)
+		 values(#{id},#{sysNo},#{type},#{name},#{createTime})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from msg_group
+		<where>id=#{id}</where>
+	</delete>
+	
+	<update id="update" parameterType="msgGroup" flushCache="true">
+		update msg_group
+		<set>
+			sys_no=#{sysNo},type=#{type},name=#{name},create_time=#{createTime}
+		</set>
+		<where>id=#{id}</where>
+	</update>
+	
+	<select id="get" resultType="msgGroup">
+		select <include refid="commCols"/> from msg_group
+  		<where>id=#{id}</where>
+	</select>
+	
+	<select id="findMsgGroup" parameterType="msgGroup" resultType="msgGroup">
+		select * from ( select a.*, rownum rn from (
+		select <include refid="commCols"/> from msg_group
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+		<choose>
+		<when test="orderbys!=null and orderbys.size()>0">
+			order by <foreach collection="orderbys" item="item" index="index" open="" separator="," close="">
+				${item.property} ${item.type}
+			</foreach>
+		</when>
+		<otherwise></otherwise>
+		</choose>
+		) a where rownum &lt;= #{orclEnd} ) where rn &gt;= #{orclBegin}
+	</select>
+	<select id="findMsgGroupCount" parameterType="msgGroup" resultType="int">
+		select count(*) from msg_group
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+	</select>
+</mapper>

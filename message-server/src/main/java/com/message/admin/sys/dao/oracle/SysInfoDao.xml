@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.admin.sys.dao.SysInfoDao">
+
+	<sql id="commCols">
+		sys_no sysNo,name name,create_time createTime
+	</sql>
+
+	<insert id="save" parameterType="sysInfo" flushCache="true">
+		 insert into sys_info(sys_no,name,create_time)
+		 values(#{sysNo},#{name},#{createTime})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from sys_info
+		<where>sys_no=#{sysNo}</where>
+	</delete>
+	
+	<update id="update" parameterType="sysInfo" flushCache="true">
+		update sys_info
+		<set>
+			name=#{name},create_time=#{createTime}
+		</set>
+		<where>sys_no=#{sysNo}</where>
+	</update>
+	
+	<select id="get" resultType="sysInfo">
+		select <include refid="commCols"/> from sys_info
+  		<where>sys_no=#{sysNo}</where>
+	</select>
+	
+	<select id="findSysInfo" parameterType="sysInfo" resultType="sysInfo">
+		select * from ( select a.*, rownum rn from (
+		select <include refid="commCols"/> from sys_info
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+		<choose>
+		<when test="orderbys!=null and orderbys.size()>0">
+			order by <foreach collection="orderbys" item="item" index="index" open="" separator="," close="">
+				${item.property} ${item.type}
+			</foreach>
+		</when>
+		<otherwise></otherwise>
+		</choose>
+		) a where rownum &lt;= #{orclEnd} ) where rn &gt;= #{orclBegin}
+	</select>
+	<select id="findSysInfoCount" parameterType="sysInfo" resultType="int">
+		select count(*) from sys_info
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+		</where>
+	</select>
+</mapper>

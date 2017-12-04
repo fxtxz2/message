@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.admin.msg.dao.MsgReceDao">
+
+	<sql id="commCols">
+		id id,msg_id msgId,rece_user_id receUserId,rece_time receTime,is_read isRead,read_time readTime
+	</sql>
+
+	<insert id="save" parameterType="msgRece" flushCache="true">
+		 insert into msg_rece(msg_id,rece_user_id,rece_time,is_read,read_time)
+		 values(#{msgId},#{receUserId},#{receTime},#{isRead},#{readTime})
+	</insert>
+	
+	<delete id="delete" flushCache="true">
+		delete from msg_rece
+		<where>id=#{id}</where>
+	</delete>
+	
+	<update id="update" parameterType="msgRece" flushCache="true">
+		update msg_rece
+		<set>
+			msg_id=#{msgId},rece_user_id=#{receUserId},rece_time=#{receTime},is_read=#{isRead},read_time=#{readTime}
+		</set>
+		<where>id=#{id}</where>
+	</update>
+	
+	<select id="get" resultType="msgRece">
+		select <include refid="commCols"/> from msg_rece
+  		<where>id=#{id}</where>
+	</select>
+	
+	<select id="findMsgRece" parameterType="msgRece" resultType="msgRece">
+		select <include refid="commCols"/> from msg_rece
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+			and isdel=0
+		</where>
+  		limit #{currentIndex}, #{size}
+	</select>
+	<select id="findMsgReceCount" parameterType="msgRece" resultType="int">
+		select count(*) from msg_rece
+		<where>
+			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+			and isdel=0
+		</where>
+	</select>
+</mapper>
