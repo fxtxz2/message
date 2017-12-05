@@ -8,8 +8,8 @@
 	</sql>
 
 	<insert id="save" parameterType="msgGroup" flushCache="true">
-		 insert into msg_group(sys_no,type,name,create_time)
-		 values(#{sysNo},#{type},#{name},#{createTime})
+		 insert into msg_group(id,sys_no,type,name,create_time)
+		 values(#{id},#{sysNo},#{type},#{name},#{createTime})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -20,7 +20,7 @@
 	<update id="update" parameterType="msgGroup" flushCache="true">
 		update msg_group
 		<set>
-			sys_no=#{sysNo},type=#{type},name=#{name},create_time=#{createTime}
+			type=#{type},name=#{name}
 		</set>
 		<where>id=#{id}</where>
 	</update>

@@ -20,7 +20,7 @@
 	<update id="update" parameterType="msgGroup" flushCache="true">
 		update msg_group
 		<set>
-			sys_no=#{sysNo},type=#{type},name=#{name},create_time=#{createTime}
+			type=#{type},name=#{name}
 		</set>
 		<where>id=#{id}</where>
 	</update>

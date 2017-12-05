@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.message.admin.msg.dao.MsgReceDao;
+import com.message.admin.msg.pojo.MsgInfo;
 import com.message.admin.msg.pojo.MsgRece;
 import com.message.admin.msg.service.MsgReceService;
+import com.system.comm.enums.Boolean;
 import com.system.comm.model.Page;
-import com.system.handle.model.ResponseFrame;
+import com.system.comm.utils.FrameNoUtil;
+import com.system.comm.utils.FrameTimeUtil;
 import com.system.handle.model.ResponseCode;
+import com.system.handle.model.ResponseFrame;
 
 /**
  * msg_rece的Service
@@ -24,18 +28,6 @@ public class MsgReceServiceImpl implements MsgReceService {
 	@Autowired
 	private MsgReceDao msgReceDao;
 	
-	@Override
-	public ResponseFrame saveOrUpdate(MsgRece msgRece) {
-		ResponseFrame frame = new ResponseFrame();
-		if(msgRece.getId() == null) {
-			msgReceDao.save(msgRece);
-		} else {
-			msgReceDao.update(msgRece);
-		}
-		frame.setCode(ResponseCode.SUCC.getCode());
-		return frame;
-	}
-
 	@Override
 	public MsgRece get(String id) {
 		return msgReceDao.get(id);
@@ -62,5 +54,46 @@ public class MsgReceServiceImpl implements MsgReceService {
 		msgReceDao.delete(id);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
+	}
+
+	@Override
+	public ResponseFrame saveList(MsgInfo msgInfo, List<String> receUserIds) {
+		ResponseFrame frame = new ResponseFrame();
+		for (String receUserId : receUserIds) {
+			MsgRece msgRece = new MsgRece();
+			msgRece.setId(FrameNoUtil.uuid());
+			msgRece.setMsgId(msgInfo.getId());
+			msgRece.setReceSysNo(msgInfo.getSysNo());
+			msgRece.setReceUserId(receUserId);
+			msgRece.setReceTime(FrameTimeUtil.getTime());
+			msgRece.setIsRead(Boolean.FALSE.getCode());
+			msgReceDao.save(msgRece);
+		}
+		frame.setCode(ResponseCode.SUCC.getCode());
+		return frame;
+	}
+
+	@Override
+	public Integer getCountUnread(String receSysNo, String receUserId) {
+		return msgReceDao.getCountUnread(receSysNo, receUserId);
+	}
+
+	@Override
+	public ResponseFrame updateIsRead(String msgId, String sysNo, String userId) {
+		ResponseFrame frame = new ResponseFrame();
+		MsgRece msgRece = getByMsgIdReceUserId(msgId, userId);
+		if(msgRece == null) {
+			frame.setCode(-2);
+			frame.setMessage("不存在该消息");
+			return frame;
+		}
+		msgReceDao.updateIsRead(msgRece.getId(), Boolean.TRUE.getCode());
+		frame.setSucc();
+		return frame;
+	}
+
+	@Override
+	public MsgRece getByMsgIdReceUserId(String msgId, String receUserId) {
+		return msgReceDao.getByMsgIdReceUserId(msgId, receUserId);
 	}
 }

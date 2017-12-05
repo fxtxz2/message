@@ -8,8 +8,8 @@
 	</sql>
 
 	<insert id="save" parameterType="sysInfo" flushCache="true">
-		 insert into sys_info(name,create_time)
-		 values(#{name},#{createTime})
+		 insert into sys_info(sys_no,name,create_time)
+		 values(#{sysNo},#{name},#{createTime})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -20,7 +20,7 @@
 	<update id="update" parameterType="sysInfo" flushCache="true">
 		update sys_info
 		<set>
-			name=#{name},create_time=#{createTime}
+			name=#{name}
 		</set>
 		<where>sys_no=#{sysNo}</where>
 	</update>

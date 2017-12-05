@@ -23,6 +23,8 @@ public class MsgRece extends BaseEntity implements Serializable {
 	private String id;
 	//消息编号
 	private String msgId;
+	//接收人来源系统编码
+	private String receSysNo;
 	//接收人
 	private String receUserId;
 	//接收时间
@@ -72,5 +74,11 @@ public class MsgRece extends BaseEntity implements Serializable {
 	}
 	public void setReadTime(Date readTime) {
 		this.readTime = readTime;
+	}
+	public String getReceSysNo() {
+		return receSysNo;
+	}
+	public void setReceSysNo(String receSysNo) {
+		this.receSysNo = receSysNo;
 	}
 }

@@ -1,7 +1,9 @@
 package com.message.admin.sys.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
 import com.message.admin.sys.pojo.UserInfo;
 
 /**
@@ -23,4 +25,6 @@ public interface UserInfoDao {
 	public abstract List<UserInfo> findUserInfo(UserInfo userInfo);
 	
 	public abstract int findUserInfoCount(UserInfo userInfo);
+
+	public abstract UserInfo getBySysNoUserId(@Param("sysNo")String sysNo, @Param("userId")String userId);
 }

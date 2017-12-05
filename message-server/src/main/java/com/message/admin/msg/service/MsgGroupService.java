@@ -1,7 +1,5 @@
 package com.message.admin.msg.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import com.message.admin.msg.pojo.MsgGroup;
@@ -15,6 +13,9 @@ import com.system.handle.model.ResponseFrame;
  */
 @Component
 public interface MsgGroupService {
+
+
+	public void save(MsgGroup msgGroup);
 	
 	/**
 	 * 保存或修改

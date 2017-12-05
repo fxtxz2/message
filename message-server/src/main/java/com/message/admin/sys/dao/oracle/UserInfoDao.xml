@@ -20,7 +20,7 @@
 	<update id="update" parameterType="userInfo" flushCache="true">
 		update user_info
 		<set>
-			sys_no=#{sysNo},user_id=#{userId},create_time=#{createTime}
+			sys_no=#{sysNo},user_id=#{userId}
 		</set>
 		<where>id=#{id}</where>
 	</update>
@@ -28,6 +28,10 @@
 	<select id="get" resultType="userInfo">
 		select <include refid="commCols"/> from user_info
   		<where>id=#{id}</where>
+	</select>
+	<select id="getBySysNoUserId" resultType="userInfo">
+		select <include refid="commCols"/> from user_info
+  		<where>sys_no=#{sysNo} and user_id=#{userId}</where>
 	</select>
 	
 	<select id="findUserInfo" parameterType="userInfo" resultType="userInfo">

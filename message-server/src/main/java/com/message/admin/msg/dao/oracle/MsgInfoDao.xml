@@ -6,6 +6,10 @@
 	<sql id="commCols">
 		id id,group_id groupId,title title,content content,create_time createTime,send_user_id sendUserId,status status,send_time sendTime
 	</sql>
+	<sql id="miMrCols">
+		mi.id id,mi.group_id groupId,mi.title title,mi.content content,mi.create_time createTime,mi.send_user_id sendUserId,
+		mi.status status,mi.send_time sendTime,mr.is_read isRead,mr.read_time readTime
+	</sql>
 
 	<insert id="save" parameterType="msgInfo" flushCache="true">
 		 insert into msg_info(id,group_id,title,content,create_time,send_user_id,status,send_time)
@@ -32,9 +36,11 @@
 	
 	<select id="findMsgInfo" parameterType="msgInfo" resultType="msgInfo">
 		select * from ( select a.*, rownum rn from (
-		select <include refid="commCols"/> from msg_info
+		select <include refid="miMrCols"/> from msg_info mi inner join msg_rece mr on(mi.id=mr.msg_id)
 		<where>
-			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+			mr.rece_sys_no=#{sysNo}
+			<if test="userId!=null and userId!=''">and mr.rece_user_id=#{userId}</if>
+			<if test="isRead!=null">and mr.is_read=#{isRead}</if>
 		</where>
 		<choose>
 		<when test="orderbys!=null and orderbys.size()>0">
@@ -42,14 +48,17 @@
 				${item.property} ${item.type}
 			</foreach>
 		</when>
-		<otherwise></otherwise>
+		<otherwise>order by mi.send_time desc</otherwise>
 		</choose>
 		) a where rownum &lt;= #{orclEnd} ) where rn &gt;= #{orclBegin}
 	</select>
 	<select id="findMsgInfoCount" parameterType="msgInfo" resultType="int">
-		select count(*) from msg_info
+		select count(*) from msg_info mi inner join msg_rece mr on(mi.id=mr.msg_id)
 		<where>
-			<if test="name!=null and name!=''">and name like concat(concat('%', #{name}), '%')</if>
+			mr.rece_sys_no=#{sysNo}
+			<if test="userId!=null and userId!=''">and mr.rece_user_id=#{userId}</if>
+			<if test="isRead!=null">and mr.is_read=#{isRead}</if>
 		</where>
 	</select>
+	
 </mapper>

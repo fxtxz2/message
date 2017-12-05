@@ -53,24 +53,6 @@ public class MsgReceController {
 		}
 	}
 
-	@RequestMapping(name = "新增或修改", value = "/msgRece/saveOrUpdate")
-	@ApiInfo(params = {
-			@ApiParam(name="id", code="id", value=""),
-	}, response = {
-			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
-			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
-			@ApiRes(name="主体内容", code="body", clazz=Object.class, value=""),
-	})
-	public ResponseFrame saveOrUpdate(MsgRece msgRece) {
-		try {
-			ResponseFrame frame = msgReceService.saveOrUpdate(msgRece);
-			return frame;
-		} catch (Exception e) {
-			LOGGER.error("处理业务异常: " + e.getMessage(), e);
-			return new ResponseFrame(ResponseCode.SERVER_ERROR);
-		}
-	}
-
 	@RequestMapping(name = "分页查询信息", value = "/msgRece/pageQuery")
 	@ApiInfo(params = {
 			@ApiParam(name="页面", code="page", value="1"),

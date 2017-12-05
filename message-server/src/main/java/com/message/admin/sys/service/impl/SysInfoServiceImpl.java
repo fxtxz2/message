@@ -9,6 +9,7 @@ import com.message.admin.sys.dao.SysInfoDao;
 import com.message.admin.sys.pojo.SysInfo;
 import com.message.admin.sys.service.SysInfoService;
 import com.system.comm.model.Page;
+import com.system.comm.utils.FrameTimeUtil;
 import com.system.handle.model.ResponseFrame;
 import com.system.handle.model.ResponseCode;
 
@@ -27,7 +28,9 @@ public class SysInfoServiceImpl implements SysInfoService {
 	@Override
 	public ResponseFrame saveOrUpdate(SysInfo sysInfo) {
 		ResponseFrame frame = new ResponseFrame();
-		if(sysInfo.getSysNo() == null) {
+		SysInfo org = get(sysInfo.getSysNo());
+		if(org == null) {
+			sysInfo.setCreateTime(FrameTimeUtil.getTime());
 			sysInfoDao.save(sysInfo);
 		} else {
 			sysInfoDao.update(sysInfo);

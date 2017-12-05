@@ -1,7 +1,5 @@
 package com.message.admin.sys.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import com.message.admin.sys.pojo.UserInfo;
@@ -30,6 +28,8 @@ public interface UserInfoService {
 	 */
 	public UserInfo get(String id);
 
+	public UserInfo getBySysNoUserId(String sysNo, String userId);
+	
 	/**
 	 * 分页获取对象
 	 * @param userInfo

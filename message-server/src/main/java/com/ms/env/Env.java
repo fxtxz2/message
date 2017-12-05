@@ -10,6 +10,7 @@ package com.ms.env;
 public enum Env {
 	PROJECT_MODEL		("project.model", "项目模式[dev开发、test测试、release正式]"),
 	PROJECT_NAME		("project.name", "项目名称"),
+	CLIENT_AUTH_INFO	("client.auth.info", "客户端鉴权信息"),
 	;
 	
 	private String code;

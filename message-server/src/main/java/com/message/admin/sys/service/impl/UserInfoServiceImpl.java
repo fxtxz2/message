@@ -9,6 +9,8 @@ import com.message.admin.sys.dao.UserInfoDao;
 import com.message.admin.sys.pojo.UserInfo;
 import com.message.admin.sys.service.UserInfoService;
 import com.system.comm.model.Page;
+import com.system.comm.utils.FrameNoUtil;
+import com.system.comm.utils.FrameTimeUtil;
 import com.system.handle.model.ResponseFrame;
 import com.system.handle.model.ResponseCode;
 
@@ -27,9 +29,13 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Override
 	public ResponseFrame saveOrUpdate(UserInfo userInfo) {
 		ResponseFrame frame = new ResponseFrame();
-		if(userInfo.getId() == null) {
+		UserInfo org = getBySysNoUserId(userInfo.getSysNo(), userInfo.getUserId());
+		if(org == null) {
+			userInfo.setId(FrameNoUtil.uuid());
+			userInfo.setCreateTime(FrameTimeUtil.getTime());
 			userInfoDao.save(userInfo);
 		} else {
+			userInfo.setId(org.getId());
 			userInfoDao.update(userInfo);
 		}
 		frame.setCode(ResponseCode.SUCC.getCode());
@@ -62,5 +68,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 		userInfoDao.delete(id);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
+	}
+
+	@Override
+	public UserInfo getBySysNoUserId(String sysNo, String userId) {
+		return userInfoDao.getBySysNoUserId(sysNo, userId);
 	}
 }

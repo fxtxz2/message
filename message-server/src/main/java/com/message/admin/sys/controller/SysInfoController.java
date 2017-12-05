@@ -32,30 +32,11 @@ public class SysInfoController {
 
 	@Autowired
 	private SysInfoService sysInfoService;
-	
-	@RequestMapping(name = "获取详细信息", value = "/sysInfo/get")
-	@ApiInfo(params = {
-			@ApiParam(name="sysNo", code="sysNo", value=""),
-	}, response = {
-			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
-			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
-			@ApiRes(name="主体内容", code="body", clazz=Object.class, value=""),
-	})
-	public ResponseFrame get(String sysNo) {
-		try {
-			ResponseFrame frame = new ResponseFrame();
-			frame.setBody(sysInfoService.get(sysNo));
-			frame.setCode(ResponseCode.SUCC.getCode());
-			return frame;
-		} catch (Exception e) {
-			LOGGER.error("处理业务异常: " + e.getMessage(), e);
-			return new ResponseFrame(ResponseCode.SERVER_ERROR);
-		}
-	}
 
-	@RequestMapping(name = "新增或修改", value = "/sysInfo/saveOrUpdate")
+	@RequestMapping(name = "系统信息-新增或修改", value = "/sysInfo/saveOrUpdate")
 	@ApiInfo(params = {
-			@ApiParam(name="sysNo", code="sysNo", value=""),
+			@ApiParam(name="系统编码", code="sysNo", value=""),
+			@ApiParam(name="系统名称", code="name", value=""),
 	}, response = {
 			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
 			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
@@ -71,7 +52,29 @@ public class SysInfoController {
 		}
 	}
 
-	@RequestMapping(name = "分页查询信息", value = "/sysInfo/pageQuery")
+	@RequestMapping(name = "系统信息-获取详细信息", value = "/sysInfo/get")
+	@ApiInfo(params = {
+			@ApiParam(name="系统编码", code="sysNo", value=""),
+	}, response = {
+			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
+			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
+			@ApiRes(name="主体内容", code="body", clazz=Object.class, value=""),
+			@ApiRes(name="系统编码", code="sysNo", pCode="body", value=""),
+			@ApiRes(name="系统名称", code="name", pCode="body", value=""),
+	})
+	public ResponseFrame get(String sysNo) {
+		try {
+			ResponseFrame frame = new ResponseFrame();
+			frame.setBody(sysInfoService.get(sysNo));
+			frame.setCode(ResponseCode.SUCC.getCode());
+			return frame;
+		} catch (Exception e) {
+			LOGGER.error("处理业务异常: " + e.getMessage(), e);
+			return new ResponseFrame(ResponseCode.SERVER_ERROR);
+		}
+	}
+
+	@RequestMapping(name = "系统信息-分页查询信息", value = "/sysInfo/pageQuery")
 	@ApiInfo(params = {
 			@ApiParam(name="页面", code="page", value="1"),
 			@ApiParam(name="每页大小", code="size", value="10"),
@@ -85,7 +88,7 @@ public class SysInfoController {
 			@ApiRes(name="总页数", code="totalPage", pCode="body", clazz=Integer.class, value="5"),
 			@ApiRes(name="总记录数", code="total", pCode="body", clazz=Integer.class, value="36"),
 			@ApiRes(name="数据集合", code="rows", pCode="body", clazz=List.class, value=""),
-			@ApiRes(name="sysNo", code="sysNo", pCode="rows", value=""),
+			@ApiRes(name="系统编码", code="sysNo", pCode="rows", value=""),
 	})
 	public ResponseFrame pageQuery(SysInfo sysInfo, String orderby) {
 		try {
@@ -101,7 +104,7 @@ public class SysInfoController {
 		}
 	}
 
-	@RequestMapping(name = "根据主键删除", value = "/sysInfo/delete")
+	@RequestMapping(name = "系统信息-根据主键删除", value = "/sysInfo/delete")
 	@ApiInfo(params = {
 			@ApiParam(name="sysNo", code="sysNo", value=""),
 	}, response = {

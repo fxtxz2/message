@@ -23,13 +23,21 @@ public class MsgGroup extends BaseEntity implements Serializable {
 	private String id;
 	//来源系统
 	private String sysNo;
-	//类型[10系统、20个人]
+	//类型[10系统、20个人、30其它]
 	private Integer type;
 	//名称
 	private String name;
 	//创建时间
 	private Date createTime;
 	
+	public MsgGroup() {
+		super();
+	}
+	public MsgGroup(String id, String sysNo) {
+		super();
+		this.id = id;
+		this.sysNo = sysNo;
+	}
 	public String getId() {
 		return id;
 	}

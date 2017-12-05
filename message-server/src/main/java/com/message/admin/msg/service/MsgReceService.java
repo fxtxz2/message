@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.message.admin.msg.pojo.MsgInfo;
 import com.message.admin.msg.pojo.MsgRece;
 import com.system.handle.model.ResponseFrame;
 
@@ -15,13 +16,6 @@ import com.system.handle.model.ResponseFrame;
  */
 @Component
 public interface MsgReceService {
-	
-	/**
-	 * 保存或修改
-	 * @param msgRece
-	 * @return
-	 */
-	public ResponseFrame saveOrUpdate(MsgRece msgRece);
 	
 	/**
 	 * 根据id获取对象
@@ -43,4 +37,18 @@ public interface MsgReceService {
 	 * @return
 	 */
 	public ResponseFrame delete(String id);
+
+	public ResponseFrame saveList(MsgInfo msgInfo, List<String> receUserIds);
+
+	/**
+	 * 根据用户编号获取未读消息的总数
+	 * @param receSysNo
+	 * @param receUserId 
+	 * @return
+	 */
+	public Integer getCountUnread(String receSysNo, String receUserId);
+
+	public ResponseFrame updateIsRead(String msgId, String sysNo, String userId);
+
+	public MsgRece getByMsgIdReceUserId(String msgId, String receUserId);
 }

@@ -4,12 +4,12 @@
 <mapper namespace="com.message.admin.msg.dao.MsgReceDao">
 
 	<sql id="commCols">
-		id id,msg_id msgId,rece_user_id receUserId,rece_time receTime,is_read isRead,read_time readTime
+		id id,msg_id msgId,rece_sys_no receSysNo,rece_user_id receUserId,rece_time receTime,is_read isRead,read_time readTime
 	</sql>
 
 	<insert id="save" parameterType="msgRece" flushCache="true">
-		 insert into msg_rece(msg_id,rece_user_id,rece_time,is_read,read_time)
-		 values(#{msgId},#{receUserId},#{receTime},#{isRead},#{readTime})
+		 insert into msg_rece(id,msg_id,rece_sys_no,rece_user_id,rece_time,is_read,read_time)
+		 values(#{id},#{msgId},#{receSysNo},#{receUserId},#{receTime},#{isRead},#{readTime})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -24,10 +24,26 @@
 		</set>
 		<where>id=#{id}</where>
 	</update>
+	<update id="updateIsRead" flushCache="true">
+		update msg_rece
+		<set>
+			is_read=#{isRead},read_time=now()
+		</set>
+		<where>id=#{id}</where>
+	</update>
 	
 	<select id="get" resultType="msgRece">
 		select <include refid="commCols"/> from msg_rece
   		<where>id=#{id}</where>
+	</select>
+	<select id="getCountUnread" resultType="int">
+		select count(*) from msg_rece
+		<where>rece_sys_no=#{receSysNo} and rece_user_id=#{receUserId} and is_read=0</where>
+	</select>
+	<select id="getByMsgIdReceUserId" resultType="msgRece">
+		select <include refid="commCols"/> from msg_rece
+  		<where>msg_id=#{msgId} and rece_user_id=#{receUserId}</where>
+  		limit 1
 	</select>
 	
 	<select id="findMsgRece" parameterType="msgRece" resultType="msgRece">

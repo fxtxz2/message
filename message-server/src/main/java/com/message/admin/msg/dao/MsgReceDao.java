@@ -1,7 +1,9 @@
 package com.message.admin.msg.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
 import com.message.admin.msg.pojo.MsgRece;
 
 /**
@@ -23,4 +25,10 @@ public interface MsgReceDao {
 	public abstract List<MsgRece> findMsgRece(MsgRece msgRece);
 	
 	public abstract int findMsgReceCount(MsgRece msgRece);
+
+	public abstract Integer getCountUnread(@Param("receSysNo")String receSysNo, @Param("receUserId")String receUserId);
+
+	public abstract void updateIsRead(@Param("id")String id, @Param("isRead")Integer isRead);
+
+	public abstract MsgRece getByMsgIdReceUserId(@Param("msgId")String msgId, @Param("receUserId")String receUserId);
 }

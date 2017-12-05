@@ -36,6 +36,18 @@ public class MsgInfo extends BaseEntity implements Serializable {
 	//发送时间
 	private Date sendTime;
 	
+	//============================== 扩展属性
+	//查询使用的用户编号
+	private String userId;
+	//系统编码
+	private String sysNo;
+	//接收人编码集合字符串
+	private String receUserIds;
+	//查询使用的是否已读
+	private Integer isRead;
+	//阅读时间
+	private Date readTime;
+	
 	public String getId() {
 		return id;
 	}
@@ -90,5 +102,35 @@ public class MsgInfo extends BaseEntity implements Serializable {
 	}
 	public void setSendTime(Date sendTime) {
 		this.sendTime = sendTime;
+	}
+	public String getReceUserIds() {
+		return receUserIds;
+	}
+	public void setReceUserIds(String receUserIds) {
+		this.receUserIds = receUserIds;
+	}
+	public String getSysNo() {
+		return sysNo;
+	}
+	public void setSysNo(String sysNo) {
+		this.sysNo = sysNo;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public Integer getIsRead() {
+		return isRead;
+	}
+	public void setIsRead(Integer isRead) {
+		this.isRead = isRead;
+	}
+	public Date getReadTime() {
+		return readTime;
+	}
+	public void setReadTime(Date readTime) {
+		this.readTime = readTime;
 	}
 }

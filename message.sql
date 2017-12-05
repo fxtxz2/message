@@ -1,6 +1,4 @@
-drop table if exists msg_cld;
-
-drop table if exists msg_group;
+﻿drop table if exists msg_group;
 
 drop table if exists msg_info;
 
@@ -11,21 +9,6 @@ drop table if exists sys_info;
 drop index uq_userid_sourcesys on user_info;
 
 drop table if exists user_info;
-
-/*==============================================================*/
-/* Table: msg_cld                                               */
-/*==============================================================*/
-create table msg_cld
-(
-   id                   varchar(32) not null comment '编号',
-   msg_id               varchar(32) not null comment '消息编号',
-   title                varchar(150) not null comment '标题',
-   content              text comment '内容',
-   create_time          datetime not null comment '创建时间',
-   primary key (id)
-);
-
-alter table msg_cld comment '子消息表';
 
 /*==============================================================*/
 /* Table: msg_group                                             */

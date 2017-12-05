@@ -33,7 +33,7 @@ public class UserInfoController {
 	@Autowired
 	private UserInfoService userInfoService;
 	
-	@RequestMapping(name = "获取详细信息", value = "/userInfo/get")
+	@RequestMapping(name = "用户-获取详细信息", value = "/userInfo/get")
 	@ApiInfo(params = {
 			@ApiParam(name="id", code="id", value=""),
 	}, response = {
@@ -53,9 +53,10 @@ public class UserInfoController {
 		}
 	}
 
-	@RequestMapping(name = "新增或修改", value = "/userInfo/saveOrUpdate")
+	@RequestMapping(name = "用户-新增或修改", value = "/userInfo/saveOrUpdate")
 	@ApiInfo(params = {
-			@ApiParam(name="id", code="id", value=""),
+			@ApiParam(name="系统编码", code="sysNo", value=""),
+			@ApiParam(name="用户编号", code="userId", value=""),
 	}, response = {
 			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
 			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
@@ -71,7 +72,7 @@ public class UserInfoController {
 		}
 	}
 
-	@RequestMapping(name = "分页查询信息", value = "/userInfo/pageQuery")
+	@RequestMapping(name = "用户-分页查询信息", value = "/userInfo/pageQuery")
 	@ApiInfo(params = {
 			@ApiParam(name="页面", code="page", value="1"),
 			@ApiParam(name="每页大小", code="size", value="10"),
@@ -101,7 +102,7 @@ public class UserInfoController {
 		}
 	}
 
-	@RequestMapping(name = "根据主键删除", value = "/userInfo/delete")
+	@RequestMapping(name = "用户-根据主键删除", value = "/userInfo/delete")
 	@ApiInfo(params = {
 			@ApiParam(name="id", code="id", value=""),
 	}, response = {

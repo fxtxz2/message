@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.message.admin.msg.dao.MsgGroupDao;
+import com.message.admin.msg.enums.MsgGroupType;
 import com.message.admin.msg.pojo.MsgGroup;
 import com.message.admin.msg.service.MsgGroupService;
 import com.system.comm.model.Page;
+import com.system.comm.utils.FrameStringUtil;
+import com.system.comm.utils.FrameTimeUtil;
 import com.system.handle.model.ResponseFrame;
 import com.system.handle.model.ResponseCode;
 
@@ -25,10 +28,23 @@ public class MsgGroupServiceImpl implements MsgGroupService {
 	private MsgGroupDao msgGroupDao;
 	
 	@Override
+	public void save(MsgGroup msgGroup) {
+		if(FrameStringUtil.isEmpty(msgGroup.getName())) {
+			msgGroup.setName(msgGroup.getId());
+		}
+		if(msgGroup.getType() == null) {
+			msgGroup.setType(MsgGroupType.SYS.getCode());
+		}
+		msgGroup.setCreateTime(FrameTimeUtil.getTime());
+		msgGroupDao.save(msgGroup);
+	}
+	
+	@Override
 	public ResponseFrame saveOrUpdate(MsgGroup msgGroup) {
 		ResponseFrame frame = new ResponseFrame();
-		if(msgGroup.getId() == null) {
-			msgGroupDao.save(msgGroup);
+		MsgGroup org = get(msgGroup.getId());
+		if(org == null) {
+			save(msgGroup);
 		} else {
 			msgGroupDao.update(msgGroup);
 		}

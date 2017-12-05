@@ -1,7 +1,5 @@
 package com.message.admin.msg.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import com.message.admin.msg.pojo.MsgInfo;
@@ -17,11 +15,11 @@ import com.system.handle.model.ResponseFrame;
 public interface MsgInfoService {
 	
 	/**
-	 * 保存或修改
+	 * 保存
 	 * @param msgInfo
 	 * @return
 	 */
-	public ResponseFrame saveOrUpdate(MsgInfo msgInfo);
+	public ResponseFrame save(MsgInfo msgInfo);
 	
 	/**
 	 * 根据id获取对象
@@ -42,5 +40,8 @@ public interface MsgInfoService {
 	 * @param id
 	 * @return
 	 */
-	public ResponseFrame delete(String id);
+	public ResponseFrame delete(String id, String sysNo, String userId);
+
+	public ResponseFrame getDtl(String id, String sysNo, String userId);
+
 }

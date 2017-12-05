@@ -1,7 +1,9 @@
 package com.message.admin.msg.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
 import com.message.admin.msg.pojo.MsgInfo;
 
 /**
@@ -21,6 +23,6 @@ public interface MsgInfoDao {
 	public abstract MsgInfo get(@Param("id")String id);
 
 	public abstract List<MsgInfo> findMsgInfo(MsgInfo msgInfo);
-	
-	public abstract int findMsgInfoCount(MsgInfo msgInfo);
+	public abstract Integer findMsgInfoCount(MsgInfo msgInfo);
+
 }

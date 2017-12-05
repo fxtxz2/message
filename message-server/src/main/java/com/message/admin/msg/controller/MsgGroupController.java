@@ -55,7 +55,10 @@ public class MsgGroupController {
 
 	@RequestMapping(name = "新增或修改", value = "/msgGroup/saveOrUpdate")
 	@ApiInfo(params = {
-			@ApiParam(name="id", code="id", value=""),
+			@ApiParam(name="编码", code="id", value=""),
+			@ApiParam(name="系统编码", code="sysNo", value=""),
+			@ApiParam(name="类型[10系统、20个人、30其它]", code="type", value=""),
+			@ApiParam(name="分组名称", code="name", value=""),
 	}, response = {
 			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
 			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
