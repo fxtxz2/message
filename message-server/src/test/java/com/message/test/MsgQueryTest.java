@@ -23,20 +23,26 @@ public class MsgQueryTest {
 		System.out.println("===================== 根据来源系统编码和用户编号查询未读记录总数 end =======================");
 		
 		System.out.println("===================== 根据来源系统编码和用户编号查询未读记录列表 begin =======================");
-		result = pageQueryUnread(1, 5, "test", "222222");
+		result = pageQueryUnread(1, 5, "test", "222222", null);
 		System.out.println(result);
-		
-		result = pageQueryUnread(2, 5, "test", "222222");
+		//根据分组获取
+		result = pageQueryUnread(1, 5, "test", "222222", "sys;notice");
 		System.out.println(result);
 		System.out.println("===================== 根据来源系统编码和用户编号查询未读记录列表 end =======================");
 		
 		System.out.println("===================== 根据来源系统编码和用户编号查询记录列表 begin =======================");
-		result = pageQuery(1, 5, "test", "222222", null);
+		result = pageQuery(1, 5, "test", "222222", null, null);
 		System.out.println(result);
 		
-		result = pageQuery(2, 5, "test", "222222", null);
+		result = pageQuery(2, 5, "test", "222222", null, "sys");
 		System.out.println(result);
 		System.out.println("===================== 根据来源系统编码和用户编号查询记录列表 end =======================");
+		
+
+		System.out.println("===================== 根据分组获取未读记录的列表 begin =======================");
+		result = findGroupUnread("test", "222222");
+		System.out.println(result);
+		System.out.println("===================== 根据分组获取未读记录的列表 end =======================");
 		
 		System.out.println("===================== 获取消息详情 begin =======================");
 		result = getDtl("b51027ae970d49e5956ebdb46783f75a", "test", "222222");
@@ -61,8 +67,22 @@ public class MsgQueryTest {
 		return FrameHttpUtil.post(MessageConfig.address + "/msgInfo/getDtl", params);
 	}
 	
+	private static String findGroupUnread(String sysNo, String userId) throws IOException {
+		String clientId = MessageConfig.clientId;
+		String time = String.valueOf(System.currentTimeMillis());
+		String sercret = MessageConfig.sercret;
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("clientId", clientId);
+		params.put("time", time);
+		params.put("sign", AuthUtil.auth(clientId, time, sercret));
+
+		params.put("sysNo", sysNo);
+		params.put("userId", userId);
+		return FrameHttpUtil.post(MessageConfig.address + "/msgInfo/findGroupUnread", params);
+	}
+	
 	private static String pageQuery(Integer page, Integer size, String sysNo, String userId,
-			Integer isRead) throws IOException {
+			Integer isRead, String groupIds) throws IOException {
 		String clientId = MessageConfig.clientId;
 		String time = String.valueOf(System.currentTimeMillis());
 		String sercret = MessageConfig.sercret;
@@ -76,10 +96,12 @@ public class MsgQueryTest {
 		params.put("sysNo", sysNo);
 		params.put("userId", userId);
 		params.put("isRead", isRead);
+		params.put("groupIds", groupIds);
 		return FrameHttpUtil.post(MessageConfig.address + "/msgInfo/pageQuery", params);
 	}
 	
-	private static String pageQueryUnread(Integer page, Integer size, String sysNo, String userId) throws IOException {
+	private static String pageQueryUnread(Integer page, Integer size, String sysNo, String userId,
+			String groupIds) throws IOException {
 		String clientId = MessageConfig.clientId;
 		String time = String.valueOf(System.currentTimeMillis());
 		String sercret = MessageConfig.sercret;
@@ -92,6 +114,7 @@ public class MsgQueryTest {
 		params.put("size", size);
 		params.put("sysNo", sysNo);
 		params.put("userId", userId);
+		params.put("groupIds", groupIds);
 		return FrameHttpUtil.post(MessageConfig.address + "/msgInfo/pageQueryUnread", params);
 	}
 

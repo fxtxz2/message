@@ -2,6 +2,7 @@ package com.message.admin.msg.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -47,6 +48,10 @@ public class MsgInfo extends BaseEntity implements Serializable {
 	private Integer isRead;
 	//阅读时间
 	private Date readTime;
+	//分组编码集合字符串
+	private String groupIds;
+	//分组编码集合
+	private List<String> groupIdList;
 	
 	public String getId() {
 		return id;
@@ -132,5 +137,17 @@ public class MsgInfo extends BaseEntity implements Serializable {
 	}
 	public void setReadTime(Date readTime) {
 		this.readTime = readTime;
+	}
+	public String getGroupIds() {
+		return groupIds;
+	}
+	public void setGroupIds(String groupIds) {
+		this.groupIds = groupIds;
+	}
+	public List<String> getGroupIdList() {
+		return groupIdList;
+	}
+	public void setGroupIdList(List<String> groupIdList) {
+		this.groupIdList = groupIdList;
 	}
 }

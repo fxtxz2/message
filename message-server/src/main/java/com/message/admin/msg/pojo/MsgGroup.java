@@ -30,6 +30,10 @@ public class MsgGroup extends BaseEntity implements Serializable {
 	//创建时间
 	private Date createTime;
 	
+	//=========================== 扩展属性
+	//未读数
+	private Integer unreadNum;
+	
 	public MsgGroup() {
 		super();
 	}
@@ -71,5 +75,11 @@ public class MsgGroup extends BaseEntity implements Serializable {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public Integer getUnreadNum() {
+		return unreadNum;
+	}
+	public void setUnreadNum(Integer unreadNum) {
+		this.unreadNum = unreadNum;
 	}
 }

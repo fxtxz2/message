@@ -1,7 +1,9 @@
 package com.message.admin.msg.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
 import com.message.admin.msg.pojo.MsgGroup;
 
 /**
@@ -23,4 +25,6 @@ public interface MsgGroupDao {
 	public abstract List<MsgGroup> findMsgGroup(MsgGroup msgGroup);
 	
 	public abstract int findMsgGroupCount(MsgGroup msgGroup);
+
+	public abstract List<MsgGroup> findUnread(@Param("sysNo")String sysNo, @Param("userId")String userId);
 }

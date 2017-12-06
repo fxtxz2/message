@@ -50,6 +50,7 @@
 	size：每页大小
 	sysNo：系统编码
 	userId：用户编号
+	groupId：分组编号，多个;隔开
 参考测试类：MsgQueryTest.java
 
 7. 获取用户的消息列表
@@ -60,11 +61,20 @@
 	sysNo：系统编码
 	userId：用户编号
 	isRead：是否阅读[0否、1是]不传入获取所有状态的消息
+	groupId：分组编号，多个;隔开
 参考测试类：MsgQueryTest.java
 
-8. 获取消息详情
+8. 根据分组获取未读记录的列表
+调用接口：/msgGroup/findUnread
+参数：
+	sysNo：系统编码
+	userId：用户编号
+参考测试类：MsgQueryTest.java 
+
+9. 获取消息详情
 调用接口：/msgInfo/getDtl
 参数：
 	id：消息编号
 	sysNo：系统编码
 	userId：用户编号
+参考测试类：MsgQueryTest.java 

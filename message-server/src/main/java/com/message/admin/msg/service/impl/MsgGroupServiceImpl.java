@@ -1,5 +1,6 @@
 package com.message.admin.msg.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,17 @@ public class MsgGroupServiceImpl implements MsgGroupService {
 		msgGroupDao.delete(id);
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
+	}
+
+	@Override
+	public List<MsgGroup> findUnread(String sysNo, String userId) {
+		List<MsgGroup> data = new ArrayList<MsgGroup>();
+		List<MsgGroup> list = msgGroupDao.findUnread(sysNo, userId);
+		for (MsgGroup mg : list) {
+			MsgGroup group = get(mg.getId());
+			group.setUnreadNum(mg.getUnreadNum());
+			data.add(group);
+		}
+		return data;
 	}
 }

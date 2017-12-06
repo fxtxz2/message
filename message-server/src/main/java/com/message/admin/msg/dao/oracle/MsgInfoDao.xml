@@ -41,6 +41,9 @@
 			mr.rece_sys_no=#{sysNo}
 			<if test="userId!=null and userId!=''">and mr.rece_user_id=#{userId}</if>
 			<if test="isRead!=null">and mr.is_read=#{isRead}</if>
+			<if test="groupIds!=null and groupIds!='' and groupIdList!=null">
+				and mi.group_id in<foreach collection="groupIdList" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+			</if>
 		</where>
 		<choose>
 		<when test="orderbys!=null and orderbys.size()>0">
@@ -58,6 +61,9 @@
 			mr.rece_sys_no=#{sysNo}
 			<if test="userId!=null and userId!=''">and mr.rece_user_id=#{userId}</if>
 			<if test="isRead!=null">and mr.is_read=#{isRead}</if>
+			<if test="groupIds!=null and groupIds!='' and groupIdList!=null">
+				and mi.group_id in<foreach collection="groupIdList" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+			</if>
 		</where>
 	</select>
 	

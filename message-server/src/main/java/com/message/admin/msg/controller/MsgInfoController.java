@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.message.admin.msg.pojo.MsgGroup;
 import com.message.admin.msg.pojo.MsgInfo;
+import com.message.admin.msg.service.MsgGroupService;
 import com.message.admin.msg.service.MsgInfoService;
 import com.message.admin.msg.service.MsgReceService;
 import com.monitor.api.ApiInfo;
@@ -36,6 +38,8 @@ public class MsgInfoController {
 	private MsgInfoService msgInfoService;
 	@Autowired
 	private MsgReceService msgReceService;
+	@Autowired
+	private MsgGroupService msgGroupService;
 
 	@RequestMapping(name = "消息-新增", value = "/msgInfo/save")
 	@ApiInfo(params = {
@@ -88,6 +92,7 @@ public class MsgInfoController {
 			@ApiParam(name="排序[{\"property\": \"createTime\", \"type\":\"desc\", \"order\":1}]", code="orderby", value="", required=false),
 			@ApiParam(name="系统编码", code="sysNo", value=""),
 			@ApiParam(name="用户编号", code="userId", value=""),
+			@ApiParam(name="分组编号[多个用;分隔]", code="groupIds", value=""),
 	}, response = {
 			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
 			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
@@ -122,6 +127,29 @@ public class MsgInfoController {
 			return new ResponseFrame(ResponseCode.SERVER_ERROR);
 		}
 	}
+
+	
+	@RequestMapping(name = "消息-根据分组获取未读记录的列表", value = "/msgInfo/findGroupUnread")
+	@ApiInfo(params = {
+			@ApiParam(name="系统编码", code="sysNo", value=""),
+			@ApiParam(name="用户编号", code="userId", value=""),
+	}, response = {
+			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
+			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
+			@ApiRes(name="主体内容", code="body", clazz=Object.class, value=""),
+			@ApiRes(name="id", code="id", pCode="body", value=""),
+	})
+	public ResponseFrame findGroupUnread(String sysNo, String userId) {
+		try {
+			ResponseFrame frame = new ResponseFrame();
+			List<MsgGroup> data = msgGroupService.findUnread(sysNo, userId);
+			frame.setBody(data);
+			return frame;
+		} catch (Exception e) {
+			LOGGER.error("处理业务异常: " + e.getMessage(), e);
+			return new ResponseFrame(ResponseCode.SERVER_ERROR);
+		}
+	}
 	
 	@RequestMapping(name = "分页查询信息", value = "/msgInfo/pageQuery")
 	@ApiInfo(params = {
@@ -131,6 +159,7 @@ public class MsgInfoController {
 			@ApiParam(name="系统编码", code="sysNo", value=""),
 			@ApiParam(name="用户编号", code="userId", value=""),
 			@ApiParam(name="是否阅读[0否、1是]", code="isRead", value=""),
+			@ApiParam(name="分组编号[多个用;分隔]", code="groupIds", value=""),
 	}, response = {
 			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
 			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),

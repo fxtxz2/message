@@ -25,6 +25,7 @@ public class MsgSendTest {
 		String result = sendMsg("test", groupId, "这是一条测试标题1", "这是正文1", sendUserId, receUserIds);
 		System.out.println(result);
 		
+		groupId = "test";
 		result = sendMsg("test", groupId, "这是一条测试标题2", "这是正文2", sendUserId, receUserIds);
 		System.out.println(result);
 		System.out.println("===================== 发送信息 end =======================");

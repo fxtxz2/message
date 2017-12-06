@@ -30,6 +30,17 @@
   		<where>id=#{id}</where>
 	</select>
 	
+	<select id="findUnread" resultType="msgGroup">
+		select group_id id,count(*) unreadNum from msg_info mi
+		inner join msg_rece mr on(mi.id=mr.msg_id)
+  		<where>
+  			mr.rece_sys_no=#{sysNo}
+  			and mr.rece_user_id=#{userId}
+  			and mr.is_read=0
+  		</where>
+  		group by group_id
+	</select>
+	
 	<select id="findMsgGroup" parameterType="msgGroup" resultType="msgGroup">
 		select <include refid="commCols"/> from msg_group
 		<where>

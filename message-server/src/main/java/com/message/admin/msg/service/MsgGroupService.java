@@ -1,5 +1,7 @@
 package com.message.admin.msg.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.message.admin.msg.pojo.MsgGroup;
@@ -44,4 +46,12 @@ public interface MsgGroupService {
 	 * @return
 	 */
 	public ResponseFrame delete(String id);
+
+	/**
+	 * 根据用户编号和系统编码获取分组未读的记录数
+	 * @param sysNo
+	 * @param userId
+	 * @return
+	 */
+	public List<MsgGroup> findUnread(String sysNo, String userId);
 }

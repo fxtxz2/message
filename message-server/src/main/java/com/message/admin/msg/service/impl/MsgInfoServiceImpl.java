@@ -86,6 +86,12 @@ public class MsgInfoServiceImpl implements MsgInfoService {
 	public ResponseFrame pageQuery(MsgInfo msgInfo) {
 		msgInfo.setDefPageSize();
 		ResponseFrame frame = new ResponseFrame();
+		if(FrameStringUtil.isEmpty(msgInfo.getGroupIds())) {
+			List<String> groupIdList = FrameStringUtil.toArray(msgInfo.getGroupIds(), ";");
+			if(groupIdList.size() > 0) {
+				msgInfo.setGroupIdList(groupIdList);
+			}
+		}
 		int total = msgInfoDao.findMsgInfoCount(msgInfo);
 		List<MsgInfo> data = null;
 		if(total > 0) {
