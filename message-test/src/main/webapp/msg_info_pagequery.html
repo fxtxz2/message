@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>消息测试</title>
+<link rel="stylesheet" type="text/css" href="resources/css/comm.css">
+</head>
+<body>
+<div>
+	<a href="index.html">返回</a>
+	<hr>
+	<div>
+		<p>获取用户消息列表</p>
+		<p>查询页码：<input type="text" id="page" value="1"></p>
+		<p>页码大小：<input type="text" id="size" value="10"></p>
+		<p>系统编码：<input type="text" id="sysNo" value="test"></p>
+		<p>用户编号：<input type="text" id="userId" value="1"></p>
+		<p>分组编号：<input type="text" id="groupId" value="sys"> [分组编号，多个;隔开]</p>
+		<p>是否阅读：<input type="text" id="isRead" value=""> [0否、1是；不传入获取所有状态的消息]</p>
+		<p>
+			<input type="button" id="save" value="提交">
+			<span id="msg" style="color: green;font-size: 12px;"></span>
+		</p>
+		<div id="list"></div>
+	</div>
+</div>
+<script type="text/javascript" src="resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/md5.js"></script>
+<script type="text/javascript" src="resources/js/msg.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#save').click(function() {
+		var page = $('#page').val();
+		var size = $('#size').val();
+		var sysNo = $('#sysNo').val();
+		var userId = $('#userId').val();
+		var groupId = $('#groupId').val();
+		var isRead = $('#isRead').val();
+		api.msgInfo.pageQuery(page, size, sysNo, userId, groupId, isRead, function(json) {
+			if(json.code == 0) {
+				$('#msg').html('查询成功');
+				var _cont = ['<table class="table"><tr><td>消息编码</td><td>标题</td><td>发送人</td><td>发送时间</td></tr>'];
+				$.each(json.body.rows, function(i, obj) {
+					_cont.push('<tr><td>',obj.id,'</td><td>',obj.title,'</td><td>',obj.sendUserId,'</td><td>',obj.sendTime,'</td></tr>');
+				});
+				_cont.push('</table>');
+				$('#list').empty().append(_cont.join(''));
+			} else {
+				alert(json.message);
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

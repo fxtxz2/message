@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>消息测试</title>
+<link rel="stylesheet" type="text/css" href="resources/css/comm.css">
+</head>
+<body>
+<div>
+	<a href="index.html">返回</a>
+	<hr>
+	<div>
+		<p>获取消息详情</p>
+		<p>消息编号：<input type="text" id="id" value="989c151875454f9eaa11478e93a6bc48"></p>
+		<p>系统编码：<input type="text" id="sysNo" value="test"></p>
+		<p>用户编号：<input type="text" id="userId" value="1"></p>
+		<p>
+			<input type="button" id="save" value="提交">
+			<span id="msg" style="color: green;font-size: 12px;"></span>
+		</p>
+		<div id="list"></div>
+	</div>
+</div>
+<script type="text/javascript" src="resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/md5.js"></script>
+<script type="text/javascript" src="resources/js/msg.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#save').click(function() {
+		var id = $('#id').val();
+		var sysNo = $('#sysNo').val();
+		var userId = $('#userId').val();
+		api.msgInfo.getDtl(id, sysNo, userId, function(json) {
+			if(json.code == 0) {
+				$('#msg').html('查询成功');
+				var obj = json.body;
+				var _cont = ['<table class="table"><tr><td>消息编码</td><td>',obj.id,'</td></tr>',
+				             '<tr><td>标题</td><td>',obj.title,'</td></tr>',
+				             '<tr><td>内容</td><td>',obj.content,'</td></tr>',
+				             '<tr><td>发送用户编号</td><td>',obj.sendUserId,'</td></tr>',
+				             '<tr><td>发送时间</td><td>',obj.sendTime,'</td></tr>'];
+				_cont.push('</table>');
+				$('#list').empty().append(_cont.join(''));
+			} else {
+				alert(json.message);
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

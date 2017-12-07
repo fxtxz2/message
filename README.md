@@ -80,7 +80,7 @@
 
 ### 8. 根据分组获取未读记录的列表
 ```
-调用接口：/msgGroup/findUnread
+调用接口：/msgInfo/findGroupUnread
 参数：
     sysNo：系统编码
     userId：用户编号

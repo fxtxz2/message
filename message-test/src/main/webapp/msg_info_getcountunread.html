@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>消息测试</title>
+<link rel="stylesheet" type="text/css" href="resources/css/comm.css">
+</head>
+<body>
+<div>
+	<a href="index.html">返回</a>
+	<hr>
+	<div>
+		<p>获取用户的未读消息数</p>
+		<p>系统编码：<input type="text" id="sysNo" value="test"></p>
+		<p>用户编号：<input type="text" id="userId" value="1"></p>
+		<p>
+			<input type="button" id="save" value="提交">
+			<span id="msg" style="color: green;font-size: 12px;"></span>
+		</p>
+	</div>
+</div>
+<script type="text/javascript" src="resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/md5.js"></script>
+<script type="text/javascript" src="resources/js/msg.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#save').click(function() {
+		var sysNo = $('#sysNo').val();
+		var userId = $('#userId').val();
+		api.msgInfo.getCountUnread(sysNo, userId, function(json) {
+			if(json.code == 0) {
+				$('#msg').html('用户编号[' + userId + ']的未读消息数: ' + json.body);
+			} else {
+				alert(json.message);
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

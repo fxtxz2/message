@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>消息测试</title>
+<link rel="stylesheet" type="text/css" href="resources/css/comm.css">
+</head>
+<body>
+<div>
+	<a href="index.html">返回</a>
+	<hr>
+	<div>
+		<p>添加系统信息</p>
+		<p>系统编码：<input type="text" id="sys_sysNo" value="test"></p>
+		<p>系统名称：<input type="text" id="sys_name" value="测试系统"></p>
+		<p>
+			<input type="button" id="sys_save" value="提交">
+			<span id="sys_msg" style="color: green;font-size: 12px;"></span>
+		</p>
+	</div>
+	<hr>
+	<div>
+		<p>添加系统用户信息</p>
+		<p>系统编码：<input type="text" id="user_sysNo" value="test"></p>
+		<p>用户编码：<input type="text" id="user_userId" value="1"></p>
+		<p>
+			<input type="button" id="user_save" value="提交">
+			<span id="user_msg" style="color: green;font-size: 12px;"></span>
+		</p>
+	</div>
+</div>
+<script type="text/javascript" src="resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/md5.js"></script>
+<script type="text/javascript" src="resources/js/msg.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#sys_save').click(function() {
+		var sysNo = $('#sys_sysNo').val();
+		var name = $('#sys_name').val();
+		api.sysInfo.saveOrUpdate(sysNo, name, function(json) {
+			if(json.code == 0) {
+				$('#sys_msg').html('添加系统信息成功');
+			} else {
+				alert(json.message);
+			}
+		});
+	});
+	$('#user_save').click(function() {
+		var sysNo = $('#user_sysNo').val();
+		var userId = $('#user_userId').val();
+		api.userInfo.saveOrUpdate(sysNo, userId, function(json) {
+			if(json.code == 0) {
+				$('#user_msg').html('添加用户成功');
+			} else {
+				alert(json.message);
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

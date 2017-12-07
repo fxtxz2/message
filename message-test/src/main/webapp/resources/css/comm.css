@@ -1,0 +1,25 @@
+.table{
+	min-width: 600px;
+	margin-bottom: 10px;
+    background: #FFF;
+    font-size: 12px;
+    border-top: 1px solid #e1e6eb;
+    margin-top: 8px;
+    border: 1px solid #e1e6eb;
+}
+.table>thead{font-size: 14px;}
+.table thead tr th {
+    padding: 8px 6px;
+    font-weight: normal;
+    color: #1f2d3d;
+    border-bottom: 1px solid #ccc;
+    background-color: #F5F6FA;
+}
+.table tbody tr td {
+    padding: 8px 6px;
+    border-top: 0px;
+    border-right: 0px;
+    border-bottom: 1px solid #e1e6eb;
+    vertical-align: middle;
+    color: #666;
+}
