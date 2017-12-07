@@ -219,7 +219,7 @@ public class MsgInfoController {
 		}
 	}
 
-	@RequestMapping(name = "消息-根据主键删除", value = "/msgInfo/delete")
+	@RequestMapping(name = "消息-根据主键删除", value = "/msgInfo/deleteRece")
 	@ApiInfo(params = {
 			@ApiParam(name="消息编号", code="id", value=""),
 			@ApiParam(name="系统编码", code="sysNo", value=""),
@@ -229,9 +229,30 @@ public class MsgInfoController {
 			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
 			@ApiRes(name="主体内容", code="body", clazz=Object.class, value=""),
 	})
-	public ResponseFrame delete(String id, String sysNo, String userId) {
+	public ResponseFrame deleteRece(String id, String sysNo, String userId) {
 		try {
-			ResponseFrame frame = msgInfoService.delete(id, sysNo, userId);
+			ResponseFrame frame = msgInfoService.deleteRece(id, sysNo, userId);
+			return frame;
+		} catch (Exception e) {
+			LOGGER.error("处理业务异常: " + e.getMessage(), e);
+			return new ResponseFrame(ResponseCode.SERVER_ERROR);
+		}
+	}
+	
+	@RequestMapping(name = "消息-标记已读或未读", value = "/msgInfo/updateIsRead")
+	@ApiInfo(params = {
+			@ApiParam(name="消息编号", code="id", value=""),
+			@ApiParam(name="系统编码", code="sysNo", value=""),
+			@ApiParam(name="用户编号", code="userId", value=""),
+			@ApiParam(name="是否阅读[0否、1是]", code="isRead", value=""),
+	}, response = {
+			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
+			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),
+			@ApiRes(name="主体内容", code="body", clazz=Object.class, value=""),
+	})
+	public ResponseFrame updateIsRead(String id, String sysNo, String userId, Integer isRead) {
+		try {
+			ResponseFrame frame = msgInfoService.updateIsRead(id, sysNo, userId, isRead);
 			return frame;
 		} catch (Exception e) {
 			LOGGER.error("处理业务异常: " + e.getMessage(), e);

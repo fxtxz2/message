@@ -79,7 +79,7 @@ public class MsgReceServiceImpl implements MsgReceService {
 	}
 
 	@Override
-	public ResponseFrame updateIsRead(String msgId, String sysNo, String userId) {
+	public ResponseFrame updateIsRead(String msgId, String sysNo, String userId, Integer isRead) {
 		ResponseFrame frame = new ResponseFrame();
 		MsgRece msgRece = getByMsgIdReceUserId(msgId, userId);
 		if(msgRece == null) {
@@ -87,7 +87,10 @@ public class MsgReceServiceImpl implements MsgReceService {
 			frame.setMessage("不存在该消息");
 			return frame;
 		}
-		msgReceDao.updateIsRead(msgRece.getId(), Boolean.TRUE.getCode());
+		if(isRead == null) {
+			isRead = Boolean.TRUE.getCode();
+		}
+		msgReceDao.updateIsRead(msgRece.getId(), isRead);
 		frame.setSucc();
 		return frame;
 	}

@@ -9,9 +9,11 @@ import com.message.admin.msg.dao.MsgInfoDao;
 import com.message.admin.msg.enums.MsgInfoStatus;
 import com.message.admin.msg.pojo.MsgGroup;
 import com.message.admin.msg.pojo.MsgInfo;
+import com.message.admin.msg.pojo.MsgRece;
 import com.message.admin.msg.service.MsgGroupService;
 import com.message.admin.msg.service.MsgInfoService;
 import com.message.admin.msg.service.MsgReceService;
+import com.system.comm.enums.Boolean;
 import com.system.comm.model.Page;
 import com.system.comm.utils.FrameNoUtil;
 import com.system.comm.utils.FrameStringUtil;
@@ -75,9 +77,21 @@ public class MsgInfoServiceImpl implements MsgInfoService {
 	}
 
 	@Override
-	public ResponseFrame delete(String id, String sysNo, String userId) {
+	public ResponseFrame deleteRece(String id, String sysNo, String userId) {
 		ResponseFrame frame = new ResponseFrame();
-		msgInfoDao.delete(id);
+		MsgInfo msgInfo = get(id);
+		if(msgInfo == null) {
+			frame.setCode(-2);
+			frame.setMessage("不存在该消息");
+			return frame;
+		}
+		MsgRece rece = msgReceService.getByMsgIdReceUserId(msgInfo.getId(), userId);
+		if(rece == null) {
+			frame.setCode(-3);
+			frame.setMessage("您不存在阅读该消息记录的权限");
+			return frame;
+		}
+		msgReceService.delete(rece.getId());
 		frame.setCode(ResponseCode.SUCC.getCode());
 		return frame;
 	}
@@ -112,9 +126,37 @@ public class MsgInfoServiceImpl implements MsgInfoService {
 			frame.setMessage("不存在该消息记录");
 			return frame;
 		}
+		MsgRece rece = msgReceService.getByMsgIdReceUserId(msgInfo.getId(), userId);
+		if(rece == null) {
+			frame.setCode(-3);
+			frame.setMessage("您不存在阅读该消息记录的权限");
+			return frame;
+		}
 		//修改状态为已读
-		msgReceService.updateIsRead(id, sysNo, userId);
+		msgReceService.updateIsRead(id, sysNo, userId, Boolean.TRUE.getCode());
 		frame.setBody(msgInfo);
+		frame.setSucc();
+		return frame;
+	}
+
+	@Override
+	public ResponseFrame updateIsRead(String id, String sysNo, String userId,
+			Integer isRead) {
+		ResponseFrame frame = new ResponseFrame();
+		MsgInfo msgInfo = get(id);
+		if(msgInfo == null) {
+			frame.setCode(-2);
+			frame.setMessage("不存在该消息记录");
+			return frame;
+		}
+		MsgRece rece = msgReceService.getByMsgIdReceUserId(msgInfo.getId(), userId);
+		if(rece == null) {
+			frame.setCode(-3);
+			frame.setMessage("您不存在阅读该消息记录的权限");
+			return frame;
+		}
+		//修改状态为已读
+		msgReceService.updateIsRead(id, sysNo, userId, isRead);
 		frame.setSucc();
 		return frame;
 	}

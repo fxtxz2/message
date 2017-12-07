@@ -36,12 +36,15 @@ public interface MsgInfoService {
 	public ResponseFrame pageQuery(MsgInfo msgInfo);
 	
 	/**
-	 * 根据id删除对象
+	 * 根据id删除我接收的消息
 	 * @param id
 	 * @return
 	 */
-	public ResponseFrame delete(String id, String sysNo, String userId);
+	public ResponseFrame deleteRece(String id, String sysNo, String userId);
 
 	public ResponseFrame getDtl(String id, String sysNo, String userId);
+
+	public ResponseFrame updateIsRead(String id, String sysNo, String userId,
+			Integer isRead);
 
 }

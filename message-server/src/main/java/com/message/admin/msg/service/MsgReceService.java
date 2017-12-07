@@ -48,7 +48,7 @@ public interface MsgReceService {
 	 */
 	public Integer getCountUnread(String receSysNo, String receUserId);
 
-	public ResponseFrame updateIsRead(String msgId, String sysNo, String userId);
+	public ResponseFrame updateIsRead(String msgId, String sysNo, String userId, Integer isRead);
 
 	public MsgRece getByMsgIdReceUserId(String msgId, String receUserId);
 }

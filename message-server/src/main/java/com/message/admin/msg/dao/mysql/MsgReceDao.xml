@@ -27,7 +27,11 @@
 	<update id="updateIsRead" flushCache="true">
 		update msg_rece
 		<set>
-			is_read=#{isRead},read_time=now()
+			is_read=#{isRead},
+			<choose>
+			<when test="isRead==0">read_time=null</when>
+			<otherwise>read_time=now()</otherwise>
+			</choose>
 		</set>
 		<where>id=#{id}</where>
 	</update>

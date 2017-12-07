@@ -196,5 +196,42 @@ api.msgInfo = {
 					callback(json);
 				}
 			});
+		},
+		deleteRece : function(id, sysNo, userId, callback) {
+			var _data = config.params();
+			_data['id'] = id;
+			_data['sysNo'] = sysNo;
+			_data['userId'] = userId;
+			jQuery.ajax({
+				url : config.address + '/msgInfo/deleteRece',
+				data : _data,
+				type : 'post',
+				dataType : 'json',
+				error : function(json){
+					alert('异常');
+				},
+				success : function(json) {
+					callback(json);
+				}
+			});
+		},
+		updateIsRead : function(id, sysNo, userId, isRead, callback) {
+			var _data = config.params();
+			_data['id'] = id;
+			_data['sysNo'] = sysNo;
+			_data['userId'] = userId;
+			_data['isRead'] = isRead;
+			jQuery.ajax({
+				url : config.address + '/msgInfo/updateIsRead',
+				data : _data,
+				type : 'post',
+				dataType : 'json',
+				error : function(json){
+					alert('异常');
+				},
+				success : function(json) {
+					callback(json);
+				}
+			});
 		}
 };

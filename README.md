@@ -1,5 +1,9 @@
-﻿# message
+﻿# 消息服务平台
 消息服务平台，给其他系统提供统一的消息接入，可以处理未读、已读、消息列表等
+
+message-server：下载源码后，启动message-server的服务，启动服务前，需要先创建好数据库(message)，然后执行sql脚本(message.sql)文件。
+
+message-test：提供了html调度接口，入口页面为index.html
 
 # 接入系统
 ### 1. 需要先创建系统的信息
@@ -31,7 +35,7 @@
 参考测试类：MsgGroupTest.java
 ```
 
-### 4. 发送消息
+### 4. 发送消息 (支持群发多人)
 ```
 调用接口：/msgInfo/save
 参数：
@@ -95,4 +99,33 @@
     sysNo：系统编码
     userId：用户编号
 参考测试类：MsgQueryTest.java
+```
+
+### 10. 删除我接收的消息
+```
+调用接口：/msgInfo/deleteRece
+参数：
+    id：消息编号
+    sysNo：系统编码
+    userId：用户编号
+参考测试类：MsgInfoTest.java
+```
+
+### 11. 标记消息的阅读状态
+```
+调用接口：/msgInfo/updateIsRead
+参数：
+    id：消息编号
+    sysNo：系统编码
+    userId：用户编号
+    isRead：是否阅读[0否、1是]
+参考测试类：MsgInfoTest.java
+```
+
+# 待完善
+```
+搜索
+定时发送
+转发消息
+置顶
 ```
