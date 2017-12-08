@@ -1,7 +1,5 @@
 package com.message.admin.sys.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import com.message.admin.sys.pojo.SysInfo;

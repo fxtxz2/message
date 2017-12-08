@@ -41,10 +41,12 @@ api.sysInfo = {
 };
 
 api.userInfo = {
-		saveOrUpdate : function(sysNo, userId, callback) {
+		saveOrUpdate : function(sysNo, userId, phone, email, callback) {
 			var _data = config.params();
 			_data['sysNo'] = sysNo;
 			_data['userId'] = userId;
+			_data['phone'] = phone;
+			_data['email'] = email;
 			jQuery.ajax({
 				url : config.address + '/userInfo/saveOrUpdate',
 				data : _data,

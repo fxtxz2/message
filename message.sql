@@ -81,6 +81,8 @@ create table user_info
    sys_no               varchar(50) not null comment '来源系统',
    user_id              varchar(32) not null comment '用户编号',
    create_time          datetime not null comment '创建时间',
+   phone                varchar(255) comment '手机号[多个;分隔]',
+   email                varchar(255) comment '邮箱[多个;分隔]',
    primary key (id)
 );
 

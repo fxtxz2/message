@@ -27,6 +27,10 @@ public class UserInfo extends BaseEntity implements Serializable {
 	private String userId;
 	//创建时间
 	private Date createTime;
+	//手机号[多个;分隔]
+	private String phone;
+	//邮箱[多个;分隔]
+	private String email;
 	
 	public String getId() {
 		return id;
@@ -54,5 +58,17 @@ public class UserInfo extends BaseEntity implements Serializable {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

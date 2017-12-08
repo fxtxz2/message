@@ -23,6 +23,8 @@
 		<p>添加系统用户信息</p>
 		<p>系统编码：<input type="text" id="user_sysNo" value="test"></p>
 		<p>用户编码：<input type="text" id="user_userId" value="1"></p>
+		<p>手机号码：<input type="text" id="user_phone" value="13845765438"> [多个;分隔]</p>
+		<p>联系邮箱：<input type="text" id="user_email" value="test@qq.com"> [多个;分隔]</p>
 		<p>
 			<input type="button" id="user_save" value="提交">
 			<span id="user_msg" style="color: green;font-size: 12px;"></span>
@@ -48,7 +50,9 @@ $(function() {
 	$('#user_save').click(function() {
 		var sysNo = $('#user_sysNo').val();
 		var userId = $('#user_userId').val();
-		api.userInfo.saveOrUpdate(sysNo, userId, function(json) {
+		var phone = $('#user_phone').val();
+		var email = $('#user_email').val();
+		api.userInfo.saveOrUpdate(sysNo, userId, phone, email, function(json) {
 			if(json.code == 0) {
 				$('#user_msg').html('添加用户成功');
 			} else {

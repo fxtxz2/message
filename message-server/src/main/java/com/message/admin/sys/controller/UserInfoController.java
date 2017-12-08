@@ -57,6 +57,8 @@ public class UserInfoController {
 	@ApiInfo(params = {
 			@ApiParam(name="系统编码", code="sysNo", value=""),
 			@ApiParam(name="用户编号", code="userId", value=""),
+			@ApiParam(name="手机号[多个;分隔]", code="phone", value=""),
+			@ApiParam(name="邮箱[多个;分隔]", code="email", value=""),
 	}, response = {
 			@ApiRes(name="响应码[0成功、-1失败]", code="code", clazz=String.class, value="0"),
 			@ApiRes(name="响应消息", code="message", clazz=String.class, value="success"),

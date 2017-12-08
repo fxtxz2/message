@@ -4,12 +4,12 @@
 <mapper namespace="com.message.admin.sys.dao.UserInfoDao">
 
 	<sql id="commCols">
-		id id,sys_no sysNo,user_id userId,create_time createTime
+		id id,sys_no sysNo,user_id userId,create_time createTime,phone phone,email email
 	</sql>
 
 	<insert id="save" parameterType="userInfo" flushCache="true">
-		 insert into user_info(id,sys_no,user_id,create_time)
-		 values(#{id},#{sysNo},#{userId},#{createTime})
+		 insert into user_info(id,sys_no,user_id,create_time,phone,email)
+		 values(#{id},#{sysNo},#{userId},#{createTime},#{phone},#{email})
 	</insert>
 	
 	<delete id="delete" flushCache="true">
@@ -20,7 +20,7 @@
 	<update id="update" parameterType="userInfo" flushCache="true">
 		update user_info
 		<set>
-			sys_no=#{sysNo},user_id=#{userId}
+			phone=#{phone},email=#{email}
 		</set>
 		<where>id=#{id}</where>
 	</update>
